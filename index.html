@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Server manager</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.css">
+</head>
+<body>
+  <div class="jumbotron well">
+      <input type="file" id="projectLoc"/>
+      <button class="btn btn-submit" id="btnUpload">Upload file</button>
+  </div>
+  <script src="js/jquery-1.11.2.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script>
+    $(window).load(function(){
+      var files;
+      $("#projectLoc").on("change",function(event){
+        files=event.target.files;
+      });
+      $("#btnUpload").on("click",function(){
+        console.log("upload")
+        var data=new FormData();
+        $.each(files,function(key,val){
+          data.append(key,val);
+        });
+        $.ajax({
+          url:"http://localhost/serverman/server/index.js",
+          method:"POST",
+          data:data,
+          cache:false,
+          dataType:'json',
+          processData:false,
+          contentType:false,
+          success:function(data, textStatus, jqXHR){
+            console.log(jqXHR)
+          },
+          error:function(err){
+            console.log(err)
+          }
+        });
+      });
+    })
+	//updated by update manager
+  </script>
+</body>
+</html>
