@@ -1,47 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="ServerMan">
 <head>
   <meta charset="UTF-8">
   <title>Server manager</title>
   <link rel="stylesheet" href="css/01_angular-material.min.css">
 </head>
-<body>
-  <div class="jumbotron well">
+<body layout="column">
+  <div layout="row" layout-margin>
+    <section flex>
+      <md-toolbar >
+        <h2 class="md-toolbar-tools">
+         <span>List of Projects</span>
+       </h2>
+      </md-toolbar>
+      <md-content ng-controller="ProjectListController">
+        <md-list>
+          <md-item ng-repeat="item in messages">
+            <md-item-content>
+              <div class="md-tile-content">
+                <h3>{{item.what}}</h3>
+                <h4>{{item.who}}</h4>
+                <p>
+                  {{item.notes}}
+                </p>
+              </div>
+            </md-item-content>
+            <md-divider ng-if="!$last"></md-divider>
+          </md-item>
+        </md-list>
+      </md-content>
+    </section>
+  </div>
+  <!-- <div class="jumbotron well">
       <input type="file" id="projectLoc"/>
       <button class="btn btn-submit" id="btnUpload">Upload file</button>
-  </div>
+  </div> -->
 
   <script>
-    $(window).load(function(){
-      var files;
-      $("#projectLoc").on("change",function(event){
-        files=event.target.files;
-      });
-      $("#btnUpload").on("click",function(){
-        console.log("upload")
-        var data=new FormData();
-        $.each(files,function(key,val){
-          data.append(key,val);
-        });
-        $.ajax({
-          url:"http://localhost/serverman/server/index.js",
-          method:"POST",
-          data:data,
-          cache:false,
-          dataType:'json',
-          processData:false,
-          contentType:false,
-          success:function(data, textStatus, jqXHR){
-            console.log(jqXHR)
-          },
-          error:function(err){
-            console.log(err)
-          }
-        });
-      });
-    })
+    // $(window).load(function(){
+    //   var files;
+    //   $("#projectLoc").on("change",function(event){
+    //     files=event.target.files;
+    //   });
+    //   $("#btnUpload").on("click",function(){
+    //     console.log("upload")
+    //     var data=new FormData();
+    //     $.each(files,function(key,val){
+    //       data.append(key,val);
+    //     });
+    //     $.ajax({
+    //       url:"http://localhost/serverman/server/index.js",
+    //       method:"POST",
+    //       data:data,
+    //       cache:false,
+    //       dataType:'json',
+    //       processData:false,
+    //       contentType:false,
+    //       success:function(data, textStatus, jqXHR){
+    //         console.log(jqXHR)
+    //       },
+    //       error:function(err){
+    //         console.log(err)
+    //       }
+    //     });
+    //   });
+    // })
 	//updated by update manager
   </script>
-  <script src=""></script>
+  <script src="js/vendor/angular-1.3.14/angular.js"></script>
+  <script src="js/vendor/angular-1.3.14/angular-animate.min.js"></script>
+  <script src="js/vendor/angular-1.3.14/angular-aria.min.js"></script>
+  <script src="js/vendor/angular-material.min.js"></script>
+  <script src="js/app/app.js"></script>
 </body>
 </html>
